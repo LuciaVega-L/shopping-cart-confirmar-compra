@@ -54,4 +54,17 @@ public class Cart {
 
         return total;
     }
+
+    public void removeItemCart(int idItem){
+        int i;
+
+        for (i = 0; i < items.size(); i++) {
+            CartItem item = items.get(i);
+
+            if (item.getProduct().getId() == idItem) {
+                items.remove(item);
+            }
+        }
+
+    }
 }

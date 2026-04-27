@@ -164,7 +164,20 @@ public class MainView {
             Button deleteButton = new Button("\uD83D\uDDD1");
 
             subtractButton.setOnAction(event -> showMessage("Por implementar"));
-            deleteButton.setOnAction(event -> showMessage("Por implementar"));
+            deleteButton.setOnAction(event ->{
+
+                OperationResult result=shoppingCartApp.deleteProductOfCart(item.getProduct().getId());
+
+                if (!result.isSuccess()) {
+                    showMessage(result.getMessage());
+                }else{
+                    showMessage(result.getMessage());
+                }
+
+                refreshCart();
+                refreshCatalog();
+                refreshPurchases();
+            });
 
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);

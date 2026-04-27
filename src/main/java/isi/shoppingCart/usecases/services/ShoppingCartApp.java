@@ -23,6 +23,7 @@ public class ShoppingCartApp {
     private PurchaseRepository purchaseRepository;
     private AgregarProductoAlCarritoUseCase agregarProductoAlCarritoUseCase;
     private ConfirmarCompraUseCase confirmarCompraUseCase;
+    private DeleteProductOfCart deleteProductOfCart;
 
     public ShoppingCartApp() {
         productRepository = new InMemoryProductRepository();
@@ -31,6 +32,7 @@ public class ShoppingCartApp {
         purchaseRepository = new InMemoryPurchaseRepository();
         agregarProductoAlCarritoUseCase = new AgregarProductoAlCarritoUseCase(productRepository, cartRepository);
         confirmarCompraUseCase = new ConfirmarCompraUseCase(cartRepository, customerRepository, purchaseRepository);
+        deleteProductOfCart=new DeleteProductOfCart(cartRepository);
 
         cargarDatosIniciales();
     }
@@ -40,13 +42,14 @@ public class ShoppingCartApp {
                            CustomerRepository customerRepository,
                            PurchaseRepository purchaseRepository,
                            AgregarProductoAlCarritoUseCase agregarProductoAlCarritoUseCase,
-                           ConfirmarCompraUseCase confirmarCompraUseCase) {
+                           ConfirmarCompraUseCase confirmarCompraUseCase, DeleteProductOfCart deleteProductOfCart) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
         this.customerRepository = customerRepository;
         this.purchaseRepository = purchaseRepository;
         this.agregarProductoAlCarritoUseCase = agregarProductoAlCarritoUseCase;
         this.confirmarCompraUseCase = confirmarCompraUseCase;
+        this.deleteProductOfCart=deleteProductOfCart;
     }
 
     private void cargarDatosIniciales() {
@@ -119,5 +122,9 @@ public class ShoppingCartApp {
 
     public OperationResult confirmPurchase() {
         return confirmarCompraUseCase.execute();
+    }
+
+    public OperationResult deleteProductOfCart(int productId){
+        return deleteProductOfCart.execute(productId);
     }
 }
