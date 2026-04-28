@@ -28,4 +28,15 @@ public class InMemoryPurchaseRepository implements PurchaseRepository {
     public void save(Purchase purchase) {
         purchases.add(purchase);
     }
+    public Purchase findById(int id){return purchases.get(id);}
+    public void eliminarCompra(int idPurchase){
+        for(int i=0;i<purchases.size();i++){
+            if(purchases.get(i).getId()==idPurchase){
+                purchases.remove(i);
+                break;
+            }
+        }
+
+
+    }
 }
