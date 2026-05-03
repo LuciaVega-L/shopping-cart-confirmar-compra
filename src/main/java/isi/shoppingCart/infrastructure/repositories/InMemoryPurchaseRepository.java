@@ -1,5 +1,6 @@
 package isi.shoppingCart.infrastructure.repositories;
 
+import isi.shoppingCart.entities.Product;
 import isi.shoppingCart.entities.Purchase;
 import isi.shoppingCart.usecases.ports.PurchaseRepository;
 import java.util.ArrayList;
@@ -28,7 +29,18 @@ public class InMemoryPurchaseRepository implements PurchaseRepository {
     public void save(Purchase purchase) {
         purchases.add(purchase);
     }
-    public Purchase findById(int id){return purchases.get(id);}
+    public Purchase findById(int id){
+        int i;
+
+        for (i = 0; i < purchases.size(); i++) {
+            Purchase purchase = purchases.get(i);
+
+            if (purchase.getId() == id) {
+                return purchase;
+            }
+        }
+        return null;
+    }
     public void eliminarCompra(int idPurchase){
         for(int i=0;i<purchases.size();i++){
             if(purchases.get(i).getId()==idPurchase){
