@@ -85,7 +85,15 @@ public class MainView {
         });
 
         Button emptyCartButton = new Button("Vaciar carrito");
-        emptyCartButton.setOnAction(event -> showMessage("Por implementar...."));
+        emptyCartButton.setOnAction(event -> {
+            OperationResult result=shoppingCartApp.vaciarCarritoUseCase();
+            if (!result.isSuccess()) {
+                showMessage(result.getMessage());
+            }else{
+                showMessage(result.getMessage());
+            }
+            refreshCart();
+        });
 
         HBox cartButtons = new HBox(10);
         cartButtons.getChildren().addAll(confirmButton, emptyCartButton);
@@ -135,7 +143,7 @@ public class MainView {
                 }else{
                     showMessage(result.getMessage());
                 }
-                refreshCatalog();;
+                refreshCatalog();
 
             });
 

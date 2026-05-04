@@ -26,6 +26,7 @@ public class ShoppingCartApp {
     private DeleteProductOfCart deleteProductOfCart;
     private EliminarUnidadItemCarrito eliminarUnidadItemCarrito;
     private AgregarUnidadProducto agregarUnidadProducto;
+    private VaciarCarritoUseCase vaciarCarritoUseCase;
 
     public ShoppingCartApp() {
         productRepository = new InMemoryProductRepository();
@@ -37,6 +38,7 @@ public class ShoppingCartApp {
         deleteProductOfCart=new DeleteProductOfCart(cartRepository);
         eliminarUnidadItemCarrito=new EliminarUnidadItemCarrito(cartRepository,deleteProductOfCart);
         agregarUnidadProducto=new AgregarUnidadProducto(productRepository);
+        vaciarCarritoUseCase=new VaciarCarritoUseCase(cartRepository);
 
         cargarDatosIniciales();
     }
@@ -48,7 +50,8 @@ public class ShoppingCartApp {
                            AgregarProductoAlCarritoUseCase agregarProductoAlCarritoUseCase,
                            ConfirmarCompraUseCase confirmarCompraUseCase, DeleteProductOfCart deleteProductOfCart,
                            EliminarUnidadItemCarrito eliminarUnidadItemCarrito,
-                           AgregarUnidadProducto agregarUnidadProducto
+                           AgregarUnidadProducto agregarUnidadProducto,
+                           VaciarCarritoUseCase vaciarCarritoUseCase
                             ) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
@@ -59,6 +62,7 @@ public class ShoppingCartApp {
         this.deleteProductOfCart=deleteProductOfCart;
         this.eliminarUnidadItemCarrito=eliminarUnidadItemCarrito;
         this.agregarUnidadProducto=agregarUnidadProducto;
+        this.vaciarCarritoUseCase=vaciarCarritoUseCase;
     }
 
     private void cargarDatosIniciales() {
@@ -143,5 +147,9 @@ public class ShoppingCartApp {
 
     public  OperationResult agregarUnidadProducto(int idProduct){
         return agregarUnidadProducto.execute(idProduct);
+    }
+
+    public OperationResult vaciarCarritoUseCase(){
+        return vaciarCarritoUseCase.execute();
     }
 }
