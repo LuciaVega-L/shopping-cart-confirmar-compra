@@ -25,6 +25,7 @@ public class ShoppingCartApp {
     private ConfirmarCompraUseCase confirmarCompraUseCase;
     private DeleteProductOfCart deleteProductOfCart;
     private EliminarUnidadItemCarrito eliminarUnidadItemCarrito;
+    private AgregarUnidadProducto agregarUnidadProducto;
 
     public ShoppingCartApp() {
         productRepository = new InMemoryProductRepository();
@@ -35,6 +36,7 @@ public class ShoppingCartApp {
         confirmarCompraUseCase = new ConfirmarCompraUseCase(cartRepository, customerRepository, purchaseRepository);
         deleteProductOfCart=new DeleteProductOfCart(cartRepository);
         eliminarUnidadItemCarrito=new EliminarUnidadItemCarrito(cartRepository,deleteProductOfCart);
+        agregarUnidadProducto=new AgregarUnidadProducto(productRepository);
 
         cargarDatosIniciales();
     }
@@ -45,7 +47,8 @@ public class ShoppingCartApp {
                            PurchaseRepository purchaseRepository,
                            AgregarProductoAlCarritoUseCase agregarProductoAlCarritoUseCase,
                            ConfirmarCompraUseCase confirmarCompraUseCase, DeleteProductOfCart deleteProductOfCart,
-                           EliminarUnidadItemCarrito eliminarUnidadItemCarrito
+                           EliminarUnidadItemCarrito eliminarUnidadItemCarrito,
+                           AgregarUnidadProducto agregarUnidadProducto
                             ) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
@@ -55,6 +58,7 @@ public class ShoppingCartApp {
         this.confirmarCompraUseCase = confirmarCompraUseCase;
         this.deleteProductOfCart=deleteProductOfCart;
         this.eliminarUnidadItemCarrito=eliminarUnidadItemCarrito;
+        this.agregarUnidadProducto=agregarUnidadProducto;
     }
 
     private void cargarDatosIniciales() {
@@ -135,5 +139,9 @@ public class ShoppingCartApp {
 
     public OperationResult eliminarUnidadiItemCarrito(int idItem){
         return eliminarUnidadItemCarrito.execute(idItem);
+    }
+
+    public  OperationResult agregarUnidadProducto(int idProduct){
+        return agregarUnidadProducto.execute(idProduct);
     }
 }
