@@ -24,6 +24,7 @@ public class ShoppingCartApp {
     private AgregarProductoAlCarritoUseCase agregarProductoAlCarritoUseCase;
     private ConfirmarCompraUseCase confirmarCompraUseCase;
     private DeleteProductOfCart deleteProductOfCart;
+    private EliminarUnidadItemCarrito eliminarUnidadItemCarrito;
 
     public ShoppingCartApp() {
         productRepository = new InMemoryProductRepository();
@@ -33,6 +34,7 @@ public class ShoppingCartApp {
         agregarProductoAlCarritoUseCase = new AgregarProductoAlCarritoUseCase(productRepository, cartRepository);
         confirmarCompraUseCase = new ConfirmarCompraUseCase(cartRepository, customerRepository, purchaseRepository);
         deleteProductOfCart=new DeleteProductOfCart(cartRepository);
+        eliminarUnidadItemCarrito=new EliminarUnidadItemCarrito(cartRepository,deleteProductOfCart);
 
         cargarDatosIniciales();
     }
@@ -42,7 +44,9 @@ public class ShoppingCartApp {
                            CustomerRepository customerRepository,
                            PurchaseRepository purchaseRepository,
                            AgregarProductoAlCarritoUseCase agregarProductoAlCarritoUseCase,
-                           ConfirmarCompraUseCase confirmarCompraUseCase, DeleteProductOfCart deleteProductOfCart) {
+                           ConfirmarCompraUseCase confirmarCompraUseCase, DeleteProductOfCart deleteProductOfCart,
+                           EliminarUnidadItemCarrito eliminarUnidadItemCarrito
+                            ) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
         this.customerRepository = customerRepository;
@@ -50,6 +54,7 @@ public class ShoppingCartApp {
         this.agregarProductoAlCarritoUseCase = agregarProductoAlCarritoUseCase;
         this.confirmarCompraUseCase = confirmarCompraUseCase;
         this.deleteProductOfCart=deleteProductOfCart;
+        this.eliminarUnidadItemCarrito=eliminarUnidadItemCarrito;
     }
 
     private void cargarDatosIniciales() {
@@ -126,5 +131,9 @@ public class ShoppingCartApp {
 
     public OperationResult deleteProductOfCart(int productId){
         return deleteProductOfCart.execute(productId);
+    }
+
+    public OperationResult eliminarUnidadiItemCarrito(int idItem){
+        return eliminarUnidadItemCarrito.execute(idItem);
     }
 }

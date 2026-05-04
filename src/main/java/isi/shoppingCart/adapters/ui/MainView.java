@@ -163,7 +163,18 @@ public class MainView {
             Button subtractButton = new Button("-");
             Button deleteButton = new Button("\uD83D\uDDD1");
 
-            subtractButton.setOnAction(event -> showMessage("Por implementar"));
+            subtractButton.setOnAction(event ->{
+                OperationResult result=shoppingCartApp.eliminarUnidadiItemCarrito(item.getProduct().getId());
+                if (!result.isSuccess()) {
+                    showMessage(result.getMessage());
+                }else{
+                    showMessage(result.getMessage());
+                }
+                refreshCart();
+                refreshCatalog();
+                refreshPurchases();
+            }
+            );
             deleteButton.setOnAction(event ->{
 
                 OperationResult result=shoppingCartApp.deleteProductOfCart(item.getProduct().getId());

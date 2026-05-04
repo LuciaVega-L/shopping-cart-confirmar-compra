@@ -21,6 +21,8 @@ public class CartItem {
         quantity = quantity + 1;
     }
 
+    public void decreaseAvailableQuantity(){quantity=quantity-1;}
+
     public double getSubtotal() {
         return product.getPrice() * quantity;
     }
